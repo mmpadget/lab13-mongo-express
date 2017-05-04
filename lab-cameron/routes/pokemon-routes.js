@@ -1,12 +1,12 @@
 'use strict';
 
 const createError = require('http-errors');
-const Pokemon = require('../models/pokemon');
+const pokemonCtrl = require('../controllers/pokemon-controller');
 
 module.exports = function(router) {
   router.get('/api/pokemon/:id', (req, res) => {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
-    Pokemon.findById(req.params.id)
+    pokemonCtrl.fetchPokemon(req.params.id)
     .then(pokemon => {
       console.log(pokemon);
       res.json(pokemon);
@@ -14,7 +14,7 @@ module.exports = function(router) {
     .catch(err => res.status(400).send(err.message));
   });
   router.get('/api/pokemon', (req, res) => {
-    Pokemon.find({})
+    pokemonCtrl.gottaFetchEmAll()
     .then(pokemon => {
       console.log(pokemon);
       res.json(pokemon);
@@ -22,7 +22,7 @@ module.exports = function(router) {
     .catch(err => res.status(404).send(err.message));
   });
   router.post('/api/pokemon', (req, res) => {
-    new Pokemon(req.body).save()
+    pokemonCtrl.createPokemon(req.body)
     .then(pokemon => {
       console.log(pokemon);
       res.json(pokemon);
@@ -32,7 +32,7 @@ module.exports = function(router) {
   router.put('/api/pokemon/:id', (req, res) => {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
     if (!req.body.name && !req.body.type) return res.status(400).send(createError(400, 'must enter a property to update'));
-    Pokemon.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    pokemonCtrl.updatePokemon(req.params.id, req.body)
     .then(pokemon => {
       console.log(pokemon);
       res.json(pokemon);
@@ -41,7 +41,7 @@ module.exports = function(router) {
   });
   router.delete('/api/pokemon/:id', (req, res) => {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
-    Pokemon.findByIdAndRemove(req.params.id)
+    pokemonCtrl.deletePokemon(req.params.id)
     .then(() => {
       console.log(`pokemon with { _id: '${req.params.id}' } found and deleted`);
       res.status(204).send();

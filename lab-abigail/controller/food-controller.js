@@ -22,23 +22,16 @@ exports.createItem = function(req, res, food) {
 };
 
 
-exports.updateItem = function(schema, food, id) {
+exports.updateItem = function(req, res, id, food) {
 
-  if(!schema) return Promise.reject(new Error('schema required'));
   if(!id) return Promise.reject(new Error('id required'));
 
-  return fs.readFileProm(`${URL}/${id}.json`)
-  .then( oldFood => {
-    let stringFood = JSON.parse(oldFood.toString());
-    stringFood.name = food.name || stringFood.name;
-    stringFood.type = food.type || stringFood.type;
-    stringFood.cost = food.cost || stringFood.cost;
-    return fs.writeFileProm(`${URL}/${id}.json`, JSON.stringify(stringFood))
-    .then(() => stringFood)
-    .catch(err => Promise.reject(createError(500, err.message)));
-
+  Food.findByIdAndUpdate(id, food, {new: true})
+  .then(food => {
+    console.log(food);
+    res.json(food);
   })
-  .catch(err => Promise.reject(createError(500, err.message)));
+  .catch(err => res.status(400).send(err.message));
 };
 
 exports.fetchItem = function(id, res) {
@@ -53,12 +46,14 @@ exports.fetchItem = function(id, res) {
   .catch(err => res.status(400).send(err.message));
 };
 
-exports.deleteItem = function(schema, id) {
+exports.deleteItem = function(id, res) {
 
-  if(!schema) return Promise.reject(new Error('schema required'));
   if(!id) return Promise.reject(new Error('id required'));
 
-  return fs.unlinkProm(`${URL}/${id}.json`)
-  .then(food => food)
-  .catch(err => Promise.reject(createError(500, err.message)));
+  Food.findByIdAndRemove(id)
+  .then(food => {
+    console.log(food);
+    res.sendStatus(204);
+  })
+  .catch(err => res.status(400).send(err.message));
 };

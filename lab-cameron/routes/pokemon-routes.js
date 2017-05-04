@@ -11,7 +11,7 @@ module.exports = function(router) {
       console.log(pokemon);
       res.json(pokemon);
     })
-    .catch(err => res.status(404).send(err.message));
+    .catch(err => res.status(400).send(err.message));
   });
   router.get('/api/pokemon', (req, res) => {
     Pokemon.find({})
@@ -31,6 +31,7 @@ module.exports = function(router) {
   });
   router.put('/api/pokemon/:id', (req, res) => {
     if (!req.params.id) return res.status(400).send(createError(400, 'bad request'));
+    if (!req.body.name && !req.body.type) return res.status(400).send(createError(400, 'must enter a property to update'));
     Pokemon.findByIdAndUpdate(req.params.id, req.body, {new: true})
     .then(pokemon => {
       console.log(pokemon);

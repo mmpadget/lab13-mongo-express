@@ -13,6 +13,7 @@ This is a single resource API which primarily utilizes express and mongoDB (driv
 ### `/api/pokemon`
 * `POST` request
  * pass data as stringified json in the body of a post request to create a resource
+  * type `http POST :3000/api/pokemon name=<name> type=<type>` into your terminal
 * `GET` request
  * a get request with no id specified will return all pokemon in the `pokemons` schema   
 

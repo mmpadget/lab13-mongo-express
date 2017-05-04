@@ -26,12 +26,19 @@ module.exports = function(router) {
     .catch(err => res.status(400).send(err.message));
   });
   router.put('/api.note/:id', (req, res) => {
-    if(!req.query.id){
-      Note.find();
-      
-    }
+
+
   });
   router.delete('/api/note/:id', (req, res) => {
-
+    if(!req.query.id) {
+      return res.sendStatus(404);
+    }
+    Note.findByIdAndRemove(req.params.id)
+    .then(() => {
+      return res.sendStatus(204);
+    })
+    .catch(err => {
+      return res.send(err.message);
+    });
   });
 };

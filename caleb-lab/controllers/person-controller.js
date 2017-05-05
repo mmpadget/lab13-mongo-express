@@ -14,39 +14,33 @@ exports.createPerson = function(person){
   debug('#createPerson');
   if(!person) return Promise.reject(createError(400, 'No person; Person required.'));
 
-  return Person(person).save()
-  .then(() => person)
-  .catch(err => Promise.reject(createError(500, err.message)));
+  return Person(person).save();
 };
 
 exports.fetchPerson = function(id){
   debug('#fetchPerson');
   if(!id) return Promise.reject(createError(400, '!!No ID!! ID Required'));
 
-  return Person.findById(id)
-  .then(person => person)
-  .catch(err => Promise.reject(createError(500, err.message)));
+  return Person.findById(id);
 };
 
-exports.updatePerson = function(id){
+exports.fetchPeople = function() {
+  debug('#fetchPeople');
+
+  return Person.find({});
+};
+
+exports.updatePerson = function(id, person){
   debug('#updatePerson');
   if(!id) return Promise.reject(createError(400, '!!No schema!! Schema Required'));
-  // note => {
-    // res.json(person);
-  return Person.findByIdAndUpdate(id)
-  .catch(err => console.error(err))
-  .then(() => person)
-  .catch(err => Promise.reject(createError(500, err.message)));
+
+  return Person.findByIdAndUpdate(id, person, {new: true});
 };
 
 
-exports.deletePerson = function(schema, id){
+exports.deletePerson = function(id){
   debug('#deletePerson');
   if(!id) return Promise.reject(createError(400, '!!No id!!'));
 
-  return Person.findByIdAndDelete(id)
-  .catch(err => console.error(err))
-  .then(() => {
-    return Promise.resolve();
-  });
+  return Person.findByIdAndRemove(id);
 };

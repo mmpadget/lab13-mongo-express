@@ -50,16 +50,16 @@ npm install -D chai mocha
 The result of installation above.
 
 ```
+"devDependencies": {
+  "chai": "^3.5.0",
+  "mocha": "^3.4.1"
+},
 "dependencies": {
   "bluebird": "^3.5.0",
-  "body-parser": "^1.17.1",
-  "express": "^4.15.2",
-  "mongoose": "^4.9.7"
-  },
-  "devDependencies": {
-  "chai": "^3.5.0",
-  "mocha": "^3.3.0"
-  }
+  "body-parser": "^1.17.2",
+  "express": "^4.15.3",
+  "mongoose": "^4.10.1"
+}
 ```
 
 ## Application

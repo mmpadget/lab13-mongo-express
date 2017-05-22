@@ -109,7 +109,7 @@ npm run debug
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/mmpadget/lab-16-express-basic-auth/blob/lab-16/lab-padget/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/mmpadget/lab13-mongo-express/blob/lab-13/lab-padget/LICENSE) file for details.
 
 ## Acknowledgments
 * Code Fellows

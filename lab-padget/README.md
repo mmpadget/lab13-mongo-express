@@ -32,7 +32,7 @@ mongod --dbpath ./db
 Initializing package.json
 ```
 npm init
-npm install -S bluebird bodyparser express mongoose
+npm install -S bluebird body-parser express mongoose
 npm install -D chai mocha
 ```
 
